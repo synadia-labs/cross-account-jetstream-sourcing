@@ -1,8 +1,9 @@
 # cross-account-sourcing
 
-Demonstrate cross-account export/import grants to SOURCE streams across account boundary.
+Example of how to source (or mirror) streams cross-accounts.
+See the server configuration file for the export/import grants, and the stream config JSONs for an example of how to source a stream "testA" from account A to account B.
 
-Steps:
+## Walkthrough
 
 Start the nats-server:
 ```
