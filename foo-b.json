@@ -1,5 +1,5 @@
 {
-  "name": "foo",
+  "name": "foo-b",
   "retention": "limits",
   "max_consumers": -1,
   "max_msgs_per_subject": -1,
@@ -13,10 +13,10 @@
   "duplicate_window": 120000000000,
   "sources": [
     {
-      "name": "testA",
+      "name": "foo",
       "external": {
-        "api": "$JS.testA.API",
-        "deliver": "testB.S"
+        "api": "$JS.accountA.API",
+        "deliver": "accountB.S"
       },
       "subject_transforms": [
         {

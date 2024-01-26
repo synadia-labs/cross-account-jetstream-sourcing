@@ -1,5 +1,5 @@
 {
-  "name": "foo-ab",
+  "name": "bar",
   "retention": "limits",
   "max_consumers": -1,
   "max_msgs_per_subject": -1,
@@ -13,28 +13,23 @@
   "duplicate_window": 120000000000,
   "sources": [
     {
-      "name": "foo",
+      "name": "bar",
       "external": {
         "api": "$JS.accountA.API",
         "deliver": "accountB.S"
       },
       "subject_transforms": [
         {
-          "src": "foo.a",
-          "dest": ""
-        }
-      ]
-    },
-    {
-      "name": "foo",
-      "external": {
-        "api": "$JS.accountA.API",
-        "deliver": "accountB.S"
-      },
-      "subject_transforms": [
+          "src": "bar.a",
+          "dest": "fromA.bar.a"
+        },
         {
-          "src": "foo.b",
-          "dest": ""
+          "src": "bar.b.*",
+          "dest": "fromA.bar.b.{{Wildcard(1)}}"
+        },
+        {
+          "src": "bar.c.>",
+          "dest": "fromA.bar.c.>"
         }
       ]
     }
