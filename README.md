@@ -14,60 +14,60 @@ For the stream 'bar' the import/export settings allow for the export to sourcing
 ## Walkthrough
 
 Start the nats-server:
-```
+```shell
 nats-server -config config/server.conf&
 ```
 
-create stream 'foo' on account A listening on subjects "foo.*"
-```
+Create stream 'foo' on account A listening on subjects "foo.*"
+```shell
 nats --user user-accountA --password s3cr3t stream add foo --subjects="foo.*" --defaults
 ```
 
-publish a message from account A on "foo.a"
-```
+Publish a message from account A on "foo.a"
+```shell
 nats --user user-accountA --password s3cr3t pub foo.a "hello from account A"
 ```
 
-publish a message from account A on "foo.b"
-```
+Publish a message from account A on "foo.b"
+```shell
 nats --user user-accountA --password s3cr3t pub foo.b "hello from account A on foo.b"
 ```
 
-create stream 'bar' on account A listening on subjects "bar.>"
-```
+Create stream 'bar' on account A listening on subjects "bar.>"
+```shell
 nats --user user-accountA --password s3cr3t stream add bar --subjects="bar.>" --defaults
 ```
 
-publish a message from account A on "bar.a.b"
-```
+Publish a message from account A on "bar.a.b"
+```shell
 nats --user user-accountA --password s3cr3t pub bar.b.c "hello from account A on bar.b.c"
 ```
 
 Create stream 'foo-b' on account B that sources accountA once with a filter on foo.b, which will source the messages from the start of the stream being sourced.
 
-```
+```shell
 nats --user user-accountB --password s3cr3t stream add foo-b --config foo-b.json
 ```
 
-create stream 'foo-ab' on account B sourcing twice from accountA on account A: once with a filter of "foo.a" and a second time but with a filter of "foo.b"
-```
+Create stream 'foo-ab' on account B sourcing twice from accountA on account A: once with a filter of "foo.a" and a second time but with a filter of "foo.b"
+```shell
 nats --user user-accountB --password s3cr3t stream add foo-ab --config foo-ab.json
 ```
 
-check the messages got sourced to foo-a and foo-ab on account B
-```
+Check the messages got sourced to foo-a and foo-ab on account B
+```shell
 nats --user user-accountB --password s3cr3t stream view foo-b
 ```
-```
+```shell
 nats --user user-accountB --password s3cr3t stream view foo-ab
 ```
 
 Create stream 'bar' on account B sourcing once from account A using various subject filters and transforms
-```
+```shell
 nats --user user-accountB --password s3cr3t stream add bar --config bar.json
 ```
 
-and finally check that the messages on "bar.>" get properly sourced (and their subjects get transformed) into stream 'bar' 
-```
+And finally check that the messages on "bar.>" get properly sourced (and their subjects get transformed) into stream 'bar' 
+```shell
 nats --user user-accountB --password s3cr3t stream view bar
 ```
